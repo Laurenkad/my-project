@@ -34,34 +34,34 @@ export class UserComponent {
   userForm: FormGroup;
   addresses: any[] = [{}];
   
-  constructor(private fb: FormBuilder, private countriesService: CountriesService) { // קונסטרוקטור של הרכיב
-    this.userForm = this.fb.group({ // יוצר טופס חדש עם FormBuilder
-      name: ['', Validators.required], // שדה 'שם' עם דרישה לא מכילה
-      birthdate: [''] // שדה 'תאריך לידה' (אינו חובה)
+  constructor(private fb: FormBuilder, private countriesService: CountriesService) { 
+    this.userForm = this.fb.group({ 
+      name: ['', Validators.required],
+      birthdate: ['']
     });
   }
 
-  onAddEmptyAddress() { // פונקציה להוספת כתובת ריקה לרשימת הכתובות
-    this.addresses.push({filled: false}); // דוחף כתובת לא ממולאת לרשימה
+  onAddEmptyAddress() { 
+    this.addresses.push({filled: false});
   }
 
-  onAddressAdded(addressIndex: number, address: any) { // פונקציה המעבירה כתובת למלאה לפי אינדקס
-    this.addresses[addressIndex] = {...address, filled: true}; // מעדכן את הכתובת שנבחרה כעת עם ערכים חדשים וסימן שהיא ממולאת
+  onAddressAdded(addressIndex: number, address: any) { 
+    this.addresses[addressIndex] = {...address, filled: true};
   }
 
-  onAddressRemoved(addressIndex: number) { // פונקציה להסרת כתובת מהרשימה
-    this.addresses.splice(addressIndex, 1); // Removes the address at the specified index from the addresses array
+  onAddressRemoved(addressIndex: number) { 
+    this.addresses.splice(addressIndex, 1);
   }
 
-  onSubmit() { // פונקציה שמופעלת בעת שליחת הטופס
-    if (this.userForm.valid && this.countriesService.isValidAddress) { // בודק אם הטופס תקף ואם הכתובת תקפה
-      const userData = { // יוצרת אובייקט נתוני משתמשים
-        ...this.userForm.value, // כוללת את ערכי הטופס
-        addresses: this.addresses // מוסיפה את הכתובות
+  onSubmit() {
+    if (this.userForm.valid && this.countriesService.isValidAddress) {
+      const userData = {
+        ...this.userForm.value,
+        addresses: this.addresses
       };
-      this.countriesService.addPerson(userData).subscribe((data) => { // שולחת את הנתונים לשירות
-        console.log(data); // מדפיס את הנתונים שהתקבלו
-        this.countriesService.refreshtable.next(true); // מעדכן שהטבלה זקוקה לרענון
+      this.countriesService.addPerson(userData).subscribe((data) => {
+        console.log(data);
+        this.countriesService.refreshtable.next(true);
       });
       
     }
