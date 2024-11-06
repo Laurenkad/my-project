@@ -12,7 +12,6 @@ interface City {
     id: number;
     name: string;
 }
-//יש לי אובייקט חדש מהסירוויס אחד 
 @Injectable({
     providedIn: 'root'
 })
