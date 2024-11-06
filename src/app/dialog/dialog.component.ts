@@ -16,11 +16,11 @@ import { MatInputModule } from '@angular/material/input';
   ],
 })
 export class DialogComponent {
-  cityName: string = '';  // Variable to hold the input city name
+  cityName: string = '';
 
   constructor(public dialogRef: MatDialogRef<any>) {}
 
-  // Method to handle the addition of the city
+ 
   addCity() {
     if (this.cityName.trim()) {
       // Pass the cityName back to the parent component
