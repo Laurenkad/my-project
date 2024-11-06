@@ -1,0 +1,33 @@
+<form  *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="onSubmit()" style="padding: 50px;">
+
+    <div style="display: flex;flex-direction: column;gap:1rem; max-width: 500px;" >
+    <mat-form-field appearance="outline">
+      <mat-label>User Name</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="userForm.get('name')?.hasError('required')">User Name is required.</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Birth Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthdate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+  
+    <div *ngFor="let address of addresses; index as i" #index>
+        <app-address [address]="address" (addressRemoved)="onAddressRemoved(i)" (addressAdded)="onAddressAdded(i, $event)"></app-address>
+    </div>
+  
+    <div>
+      <button type="submit" [disabled]="!userForm.valid">Submit</button>
+    </div>
+    <div>
+        <button (click)="onAddEmptyAddress()" style="background-color: rgb(11, 100, 216); color:white; padding:.5rem; border:none; margin-block:1rem;">
+            Add Address
+        </button>
+      </div>
+  </form>
+
+
+  

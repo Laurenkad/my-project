@@ -1,0 +1,40 @@
+<form *ngIf="addressForm" [formGroup]="addressForm" (ngSubmit)="addAddress()" style="padding: 50px;">
+    <mat-form-field appearance="outline">
+      <mat-label>Address Name</mat-label>
+      <input matInput formControlName="addressName">
+      <mat-error *ngIf="addressForm.get('addressName')?.hasError('required')">Address Name is required.</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" >
+      <mat-label>Select Country</mat-label>
+      <mat-select formControlName="country" (selectionChange)="onCountryChange($event.value)">
+        <mat-option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="addressForm.get('country')?.hasError('required')">Country is required.</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" >
+      <mat-label>City</mat-label>
+      <mat-select formControlName="city">
+        <mat-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="addressForm.get('city')?.hasError('required')">City is required.</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Street</mat-label>
+      <input matInput formControlName="street">
+      <mat-error *ngIf="addressForm.get('street')?.hasError('required')">Street is required.</mat-error>
+    </mat-form-field>
+  
+    <div>
+      <button type="submit">Submit address</button>
+      <button (click)="removeAddress()" type="button">Remove address</button>
+    </div>
+    <div *ngIf="address.filled" style="color:gray;">
+        {{address.addressName}}, {{address.country}},   {{address.city}}, {{address.street}}
+    </div>
+    
+</form>
+
+<button mat-button (click)="openDialog()">Open Install Angular Dialog</button>
