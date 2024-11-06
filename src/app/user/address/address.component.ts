@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { CountriesService } from '../../services/countries.service';
-import { CommonModule } from '@angular/common'; // Make sure to import CommonModule
+import { CommonModule } from '@angular/common'; 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,44 +48,44 @@ export class AddressComponent implements OnInit {
 
   ngOnInit() { // מופעל כאשר הרכיב נטען
     this.loadCountries(); // טוענת את רשימת המדינות
-    this.addressForm.valueChanges.subscribe(() => { // מנוי על שינויים בטופס כתובת
-      // בדוק אם הטופס תקף ועדכן את המשתנה 'isValid'
-      this.countriesService.isValidAddress = this.addressForm.valid; // מעדכן אם הכתובת תקפה
+    this.addressForm.valueChanges.subscribe(() => { 
+      
+      this.countriesService.isValidAddress = this.addressForm.valid;
     });
   }
 
-  removeAddress() { // פונקציה להסרת כתובת
-    this.addressRemoved.emit(null); // שולח אירוע להסרת הכתובת
+  removeAddress() { 
+    this.addressRemoved.emit(null); 
   }
 
-  loadCountries() { // פונקציה לטעינת מדינות
-    this.countriesService.getCountries().subscribe( // מבצע מנוי על קריאת שירות המדינות
-      (data)=> { // כאשר הנתונים מתקבלים
-        this.countries = data; // מאחסן את הנתונים במשתנה 'countries'
+  loadCountries() { 
+    this.countriesService.getCountries().subscribe( 
+      (data)=> { 
+        this.countries = data;
       },
       
     );
   }
 
 
-  onCountryChange(countryId: number) { // מופעל כאשר המשתמש בוחר מדינה
-    this.loadCities(countryId); // טוען את הערים למדינה שנבחרה
+  onCountryChange(countryId: number) { 
+    this.loadCities(countryId); 
   }
 
   loadCities(countryId: number) { // פונקציה לטעינת ערים על פי מזהה המדינה
-    this.countriesService.getCitiesByCountryId(countryId).subscribe( // מבצע מנוי על קריאת שירות הערים
-      data => { // כאשר הנתונים מתקבלים
-        this.cities = data; // מאחסן את הנתונים במשתנה 'cities'
+    this.countriesService.getCitiesByCountryId(countryId).subscribe( 
+      data => { 
+        this.cities = data;
       },
     );
   }
 
-  addAddress() { // פונקציה להוספת כתובת
-    if (this.addressForm.valid) { // בודק אם הטופס תקף
-      this.address = {...this.addressForm.value, filled: true} // מפעיל את הכתובת עם ערכים מהטופס
-      console.log(this.address); // מדפיס את הכתובת למחשב מסוף
-      this.addressAdded.emit(this.addressForm.value); // שולח אירוע עם פרטי הכתובת
-      this.addressForm.reset(); // מאפס את הטופס
+  addAddress() { 
+    if (this.addressForm.valid) { 
+      this.address = {...this.addressForm.value, filled: true} 
+      console.log(this.address); 
+      this.addressAdded.emit(this.addressForm.value); 
+      this.addressForm.reset(); 
     }
   }
 
@@ -94,19 +94,19 @@ export class AddressComponent implements OnInit {
 
 
   openDialog() { // פונקציה לפתיחת חלון דיאלוג
-    const dialogRef = this.dialog.open(DialogComponent); // פותח חלון דיאלוג עם רכיב DialogComponent
+    const dialogRef = this.dialog.open(DialogComponent); 
 
-    dialogRef.afterClosed().subscribe(result => { // מאזין לסגירת הדיאלוג
-      if (result) { // אם יש תוצאה (משמעותה שהמשתמש לחץ על "התקן")
-        console.log('Install clicked!'); // מדפיס שהמשתמש לחץ על התקנה
-        console.log(result); // מדפיס את התוצאה שהתקבלה מהדיאלוג
-        this.countriesService.addCity(this.countries.length + 1, result).subscribe((data) => { // מוסיף עיר עם מזהה חדש
-          console.log(data); // מדפיס את הנתונים שהתקבלו מהשירות
+    dialogRef.afterClosed().subscribe(result => { 
+      if (result) { 
+        console.log('Install clicked!'); 
+        console.log(result); 
+        this.countriesService.addCity(this.countries.length + 1, result).subscribe((data) => { 
+          console.log(data);
         });
         
-        // טיפול בפעולת ההתקנה כאן
+        
       } else {
-        console.log('Dialog was closed without installation.'); // מדפיס אם הדיאלוג נסגר ללא התקנה
+        console.log('Dialog was closed without installation.');
       }
     });
   }
